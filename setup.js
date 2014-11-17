@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require('fs').mkdirSync('db');
+require('mkdirp').sync('db');
 var conf = require('nconf');
 conf.use('file', { file: 'db/settings.json' });
 conf.load();
