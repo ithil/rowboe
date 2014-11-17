@@ -26,3 +26,11 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# Vim temporary files
+*~
+*.swp
+*.swo
+
+# RowBoe directories
+db
