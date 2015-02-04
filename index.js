@@ -13,7 +13,7 @@ app.conf.load();
 // Check if setup has been completed
 if(!app.conf.get('setupComplete')) {
     console.log("RowBoe hasn't been configured yet");
-    console.log("Run 'npm setup' to start configuration setup");
+    console.log("Run 'node ./setup.js' to start configuration setup");
     process.exit(1);
 }
 

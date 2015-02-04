@@ -12,7 +12,6 @@
   "scripts":
   {
     "start": "node ./index.js"
-    "setup": "node ./setup.js"
   },
   "repository":
    { 
