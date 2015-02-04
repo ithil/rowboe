@@ -10,6 +10,13 @@ app.utils = utils;
 app.conf.use('file', { file: 'db/settings.json' });
 app.conf.load();
 
+// Check if setup has been completed
+if(!app.conf.get('setupComplete')) {
+    console.log("RowBoe hasn't been configured yet");
+    console.log("Run 'npm setup' to start configuration setup");
+    process.exit(1);
+}
+
 // Initialize irc client
 app.client = new irc.Client(app.conf.get('server'), app.conf.get('nick'), { channels: app.conf.get('channels'), messageSplit: 440});
 
