@@ -54,7 +54,6 @@ function formatPeriod(period) {
 function formatMessage(from, to, text, args) {
     var args = args || [];
     var result = text.replace(new RegExp('#{([^}]+)}'), function(m, c) {
-        log(c);
         if(!isNaN(c)) {
             return (args[parseInt(c)-1] || '');
         }
