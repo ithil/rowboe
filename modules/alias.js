@@ -20,7 +20,7 @@ module.exports = exports = function (app) {
         db.save();
     }
     app.cmdRegister('alias', { "f": handler,
-        "h": "Creates an alias.\nSyntax: !alias name_of_alias command arg1 arg2\nExample: !alias thank echo Thank you, $v1!\n!thank Amy => Thank you, Amy!\nArguments: $v1, $v2, ..., $vn\nAll arguments: $v*\nSpecial variables: $from (sender), $to (channel)"
+        "h": "Creates an alias.\nSyntax: !alias name_of_alias command arg1 arg2\nExample: !alias thank echo Thank you, #{1}!\n!thank Amy => Thank you, Amy!\nArguments: ${1}, ${2}, ..., ${n}\nAll arguments: ${*}\nSpecial variables: #{nick}, #{channel}"
     });
     function removeAlias(opt, callback) {
         var alias = opt.cmd.shift();

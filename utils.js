@@ -52,13 +52,23 @@ function formatPeriod(period) {
 }
 
 function formatMessage(from, to, text, args) {
-    text = text.replace(/\$from/g, from);
-    text = text.replace(/\$to/g, to);
-    text = text.replace(/\$v([0-9]+)/g, function(a, b){
-        return (args[parseInt(b)-1] || '');
-    })
-    text = text.replace(/\$v\*/g, args.join(' '));
-    return text;
+    var args = args || [];
+    var result = text.replace(new RegExp('#{([^}]+)}'), function(m, c) {
+        log(c);
+        if(!isNaN(c)) {
+            return (args[parseInt(c)-1] || '');
+        }
+        if(c=="*"){
+            return args.join(' '); 
+        }
+        if(c=="nick"){
+            return from;
+        }
+        if(c=="channel"){
+            return to;
+        }
+    });
+    return result;
 }
 
 module.exports = {

@@ -115,7 +115,7 @@ app.cmdexec = function (opt, callback) {
         app.database('main').collection('alias').findOne({alias: opt.cmd[0]}, function(err, doc) {
             if(doc) {
                 var AlCmd = doc.cmd.split(' ');
-                if(opt.cmd[0] == AlCmd) {
+                if(opt.cmd[0] == AlCmd[0]) {
                     callback(opt.to, "Error: Stop your recursion attempts at once!");
                     return;
                 }
