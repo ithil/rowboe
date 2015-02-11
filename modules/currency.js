@@ -6,13 +6,26 @@ module.exports = exports = function (app) {
     var shorthands = {
         "dollar": "USD",
         "dollars": "USD",
+        "buck": "USD",
+        "bucks": "USD",
+        "US$": "USD",
         "$": "USD",
+        "A$": "AUD",
+        "C$": "CAD",
+        "NZ$": "NZD",
+        "peso": "MXN",
+        "real": "BRL",
+        "R$": "BRL",
+        "₪": "ILS",
         "euro": "EUR",
         "euros": "EUR",
         "€": "EUR",
         "pound": "GBP",
         "quid": "GBP",
         "£": "GBP",
+        "yen": "JPY",
+        "¥": "JPY",
+        "zł": "PLN",
     }
     function resolveShorthand(name) {
         if(name == undefined) {return undefined;}
