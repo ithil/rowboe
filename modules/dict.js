@@ -1,4 +1,5 @@
 module.exports = exports = function (app) {
+    var b = app.bold;
     var request = app.utils.request;
     var cheerio = app.utils.cheerio;
     var useragent = app.utils.useragent;
@@ -12,7 +13,7 @@ module.exports = exports = function (app) {
             if (!error && response.statusCode == 200) {
                 var res = JSON.parse(body);
                 if (res.list.length > 0) { 
-                  callback(opt.to, "\x02"+opt.cmd.join(' ')+"\x0F: "+res.list[0].definition);
+                  callback(opt.to, b(opt.cmd.join(' ')+": ")+res.list[0].definition);
                 }
             }
         });
@@ -30,7 +31,7 @@ module.exports = exports = function (app) {
          
                 var def = $('div.def-content').first().text().replace(/(\r\n|\n|\r)/gm," ").trim();
                 if (def) {
-                  callback(opt.to, "\x02"+opt.cmd.join(' ')+"\x0F: "+def);
+                  callback(opt.to, b(opt.cmd.join(' ')+": ")+def);
                 }
             }
         });
@@ -49,7 +50,7 @@ module.exports = exports = function (app) {
                 var term = $('dt').first().text();
                 var etym = $('dd').first().text();
                 if (etym) {
-                  callback(opt.to, "\x02"+term+"\x0F: "+etym);
+                  callback(opt.to, b(term+": ")+etym);
                 }
             }
         });
@@ -67,7 +68,7 @@ module.exports = exports = function (app) {
          
                 var def = $('li.sense_list_item').first().text();
                 if (def) {
-                  callback(opt.to, "\x02"+opt.cmd.join(' ')+"\x0F "+def);
+                  callback(opt.to, b(opt.cmd.join(' ')+" ")+def);
                 }
             }
         });

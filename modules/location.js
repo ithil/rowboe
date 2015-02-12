@@ -7,6 +7,7 @@ module.exports = exports = function (app) {
     var dns = require('dns');
     var moment = app.utils.moment;
     var log = app.utils.log;
+    var b = app.bold;
     app.cmdRegister('setlocation', { "f": setLocation,
         "h": "Sets your preferred location for !time and !weather",
     });
@@ -40,7 +41,7 @@ module.exports = exports = function (app) {
                 var host = info.host;
                 geoip(host, function (res) {
                     var time = (res.timezone?moment().tz(res.timezone).format('h:mm a'):undefined);
-                    callback(opt.to, "\x02"+nick+":\x0F Country: "+res.country+(res.timezone?" Timezone: "+res.timezone+" (\x02"+time+"\x0F)":''));
+                    callback(opt.to, b(nick+": ")+"Country: "+res.country+(res.timezone?" Timezone: "+res.timezone+" ("+b(time)+")":''));
                 });
             }
         })
@@ -69,7 +70,7 @@ module.exports = exports = function (app) {
     function timeCmd(opt, callback) {
         var output = function (timeZoneId, geo) {
             var time = moment().tz(timeZoneId).format('h:mm a');
-            callback(opt.to, '\x02'+geo.address+':\x0F '+time);
+            callback(opt.to, b(geo.address+': ')+time);
         }
         if(!opt.cmd[0]) {
             //callback(opt.to, "The time is... inexorably slipping away.");return;
@@ -164,7 +165,7 @@ module.exports = exports = function (app) {
 
                     var sunrise = astro.attr('sunrise');
                     var sunset = astro.attr('sunset');
-                    callback(opt.to, '\x02'+title+':\x0F '+
+                    callback(opt.to,  b(title+': ')+
                                       text+', '+
                                       tempc+'°C ('+tempf+'°F), '+
                                       'Hum.: '+humidity+'%, Pressure: '+prein+'in ('+pressure+'mb), '+

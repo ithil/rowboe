@@ -2,6 +2,7 @@ module.exports = exports = function (app) {
     var request = app.utils.request;
     var log = app.utils.log;
     var formatPeriod = app.utils.formatPeriod;
+    var f = app.format;
 
     var api_key = "fuiKNFp9vQFvjLNvx4sUwti4Yb5yGutBN4Xh10LXZhhRKjWlV4";
     var tumpat = new RegExp('([^\\./]+\\.tumblr\\.com)');
@@ -42,7 +43,7 @@ module.exports = exports = function (app) {
                     var nsfw = data.is_nsfw;
                     var updated = new Date().getTime() - data.updated*1000;
                     callback(opt.to, "[Tumblr] "+title
-                            +" | "+(nsfw?"\x04NSFW\x0F ":"")
+                            +" | "+(nsfw?f("light_red","NSFW "):"")
                             +posts+" posts "+(likes?("/ "+likes+" likes "):"")
                             +"| Last updated: "+formatPeriod(updated)+" ago");
                 }

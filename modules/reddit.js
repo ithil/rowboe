@@ -2,6 +2,8 @@ module.exports = exports = function (app) {
     var request = app.utils.request;
     var log = app.utils.log;
     var formatPeriod = app.utils.formatPeriod;
+    var b = app.bold;
+    var f = app.format;
     function redditSearch(opt, callback) {
         var sortpat = new RegExp("sort:([A-Za-z]+)")
         var sort = 'relevance';
@@ -20,7 +22,7 @@ module.exports = exports = function (app) {
                 if (!res.data) {return;}
                 if (res.data.children.length > 0) { 
                   var item = res.data.children[0].data;
-                  callback(opt.to, "http://redd.it/"+item.id+" /r/"+item.subreddit+" \x02"+item.title);
+                  callback(opt.to, "http://redd.it/"+item.id+" /r/"+item.subreddit+" "+b(item.title));
                 }
             }
         });
@@ -50,7 +52,7 @@ module.exports = exports = function (app) {
                     var des = data.public_description;
                     var subscribers = data.subscribers;
                     var created = new Date().getTime() - data.created*1000;
-                    callback(opt.to, "[Subreddit] "+title+" | "+(nsfw?"\x04NSFW\x0F ":"")+subscribers+" subscribers | "+des+" | subreddit for "+formatPeriod(created));
+                    callback(opt.to, "[Subreddit] "+title+" | "+(nsfw?f("light_red","NSFW "):"")+subscribers+" subscribers | "+des+" | subreddit for "+formatPeriod(created));
                 }
                 else if(type == "comments") {
                     var data = res[0].data.children[0].data;
@@ -59,7 +61,7 @@ module.exports = exports = function (app) {
                     var author = data.author;
                     var created = new Date().getTime() - data.created*1000;
                     callback(opt.to, "[reddit] "+title+" | "
-                        +(nsfw?"\x04NSFW\x0F ":"")
+                        +(nsfw?f("light_red","NSFW "):"")
                         +"/u/"+author+" | ↑"
                         +data.ups+" ("+data.upvote_ratio*100+"%)"
                         +" | submitted "+formatPeriod(created)+" ago");

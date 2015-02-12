@@ -1,5 +1,6 @@
 module.exports = exports = function (app) {
     var db = app.database('main').collection('alias');
+    var b = app.bold;
     var handler = function (opt, callback) {
         if(opt.subcmd && subcommands[opt.subcmd]) {
             subcommands[opt.subcmd](opt, callback);
@@ -34,7 +35,7 @@ module.exports = exports = function (app) {
     function listAliases(opt, callback) {
         db.find({ alias: { $exists: true} }).toArray(function (err, docs) {
             var aliases = Array.prototype.map.call(docs, function (d) { return d.alias; })
-            callback(opt.to, "\x02Aliases:\x0F "+aliases.join(', '));
+            callback(opt.to, b("Aliases: ")+aliases.join(', '));
         })
     }
     app.cmdRegister('aliases', { "f": listAliases,
@@ -48,10 +49,10 @@ module.exports = exports = function (app) {
                 var AlCmd = doc.cmd;
                 var author = doc.from;
                 var time = doc.time;
-                callback(opt.to, "\x02Alias info:\x0F "+alias
-                    +"\n\x02Command:\x0F "+AlCmd
-                    +"\n\x02Author:\x0F "+author
-                    +"\n\x02Created:\x0F "+time.toString());
+                callback(opt.to, b("Alias info: ")+alias+"\n"+
+                    +b("Command: ")+AlCmd+"\n"+
+                    +b("Author: ")+author+"\n"+
+                    +b("Created: ")+time.toString());
             }
             else {
                 callback(opt.to, alias+": No such alias");

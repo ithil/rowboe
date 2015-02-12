@@ -1,4 +1,5 @@
 module.exports = exports = function (app) {
+    var b = app.bold;
     var Google = require('google');
     var request = app.utils.request;
     var useragent = app.utils.useragent;
@@ -28,7 +29,7 @@ module.exports = exports = function (app) {
         for(var i=0; i < (all?10:1); i++) {
           if(links[i]) {
               if(links[i].link) {
-                  callback(opt.to, links[i].link+' \x02'+links[i].title);
+                  callback(opt.to, links[i].link+b(links[i].title));
               }
           }
         }
@@ -69,7 +70,7 @@ module.exports = exports = function (app) {
                 var res = JSON.parse(body);
                 var language = res[2] || '?';
                 var text = res[0][0][0];
-                callback(opt.to, text+' \x02('+language+')');
+                callback(opt.to, text+b(' ('+language+')'));
             }
         });
     }

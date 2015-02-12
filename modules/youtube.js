@@ -2,6 +2,7 @@ module.exports = exports = function (app) {
     var request = app.utils.request;
     var cheerio = app.utils.cheerio;
     var log = app.utils.log;
+    var b = app.bold;
     function youtubeSearch(opt, callback) {
         request({
             uri: "http://gdata.youtube.com/feeds/api/videos/?v=2&alt=jsonc&max-results=1&paid-content=false&q="+opt.cmd.join('+'),
@@ -15,7 +16,7 @@ module.exports = exports = function (app) {
                   var secs = (vid.duration-(mins*60+hours*3600)) | 0;
                   callback(opt.to, "http://youtu.be/"+vid.id
                       +" ["+(hours>0?hours+":"+("0"+mins).slice(-2):mins)
-                      +":"+("0"+secs).slice(-2)+"] \x02"+vid.title);
+                      +":"+("0"+secs).slice(-2)+"] "+b(vid.title));
                 }
             }
         });

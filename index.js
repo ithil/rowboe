@@ -20,6 +20,10 @@ if(!app.conf.get('setupComplete')) {
 // Initialize irc client
 app.client = new irc.Client(app.conf.get('server'), app.conf.get('nick'), { channels: app.conf.get('channels'), messageSplit: 440});
 
+// Message formatting
+app.format = irc.colors.wrap;
+app.bold = function(text) {return irc.colors.wrap("bold", text)}
+
 // Prepare database access
 app.databases = { };
 app.database = function (db) {

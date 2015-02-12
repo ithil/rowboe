@@ -1,5 +1,7 @@
 var pjson = require('../package.json');
 module.exports = exports = function (app) {
+    var b = app.bold;
+    var formatPeriod = app.utils.formatPeriod;
     var handler = function (opt, callback) {
         if(opt.subcmd && commands[opt.subcmd]) {
             commands[opt.subcmd](opt, callback);
@@ -22,10 +24,10 @@ module.exports = exports = function (app) {
             callback(opt.to, "License: "+pjson.license);
         },
         "uptime": function (opt, callback) {
-            callback(opt.to, "\x02Uptime:\x0F "+formatPeriod(process.uptime()*1000));
+            callback(opt.to, b("Uptime: ")+formatPeriod(process.uptime()*1000));
         },
         "source": function (opt, callback) {
-            callback(opt.to, "\x02Source:\x0F "+pjson.homepage);
+            callback(opt.to, b("\x02Source:\x0F ")+pjson.homepage);
         },
     }
     app.cmdRegister('about', { "f": handler,

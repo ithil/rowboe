@@ -6,6 +6,7 @@ module.exports = exports = function (app) {
     var useragent = app.utils.useragent;
     var conf = app.conf;
     var log = app.utils.log;
+    var b = app.bold;
     var handler = function (opt, callback) {
         if(opt.subcmd && subcommands[opt.subcmd]) {
             subcommands[opt.subcmd](opt, callback);
@@ -32,7 +33,7 @@ module.exports = exports = function (app) {
         col.find({ $or: [ {title: RegExp(opt.cmd.join(' '), 'i') }, {link: RegExp(opt.cmd.join(' '), 'i')} ]}).sort({time: -1}).limit(1).toArray(function(err, docs) {
             if(docs) {
                 docs.forEach(function(d) {
-                    callback(opt.to, d.link+' \x02'+(d.title?d.title:''));
+                    callback(opt.to, d.link+' '+b((d.title?d.title:'')));
                 })
             }
         })
@@ -72,7 +73,7 @@ module.exports = exports = function (app) {
                 title = $('title').text();
                 var contType = response.headers['content-type'];
                 if (title) {
-                  callback(opt.to, "\x02T:\x0F "+title.replace(/(\r\n|\n|\r)/gm," ").trim());
+                  callback(opt.to, b("T: ")+title.replace(/(\r\n|\n|\r)/gm," ").trim());
                 }
                 else { log('['+link+'] -> No title')};
             }
@@ -84,7 +85,7 @@ module.exports = exports = function (app) {
             var contType = response.headers['content-type'];
             var size = response.headers['content-length'];
             if(!RegExp('text/html').test(contType)) {
-                callback(to, "\x02Type:\x0F "+contType+" \x02Size:\x0F "+app.utils.humanFileSize(size, true));
+                callback(to, b("Type: ")+contType+b(" Size: ")+app.utils.humanFileSize(size, true));
             }
             if(size > (5 * 1024 * 1024)) {
                 r.abort();

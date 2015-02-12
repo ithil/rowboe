@@ -1,5 +1,6 @@
 // RowBoe core commands
 module.exports = exports = function (app) {
+    var b = app.bold;
     var mute = function (opt, callback) {
         app.conf.set('chanprefs:'+opt.to+':mute', true);
         app.conf.save();
@@ -51,7 +52,7 @@ module.exports = exports = function (app) {
             var cmd = opt.cmd.shift();
             if(commands[cmd]) {
                 if(commands[cmd].h) {
-                    callback(opt.to, "\x02"+cmd+"\x0F: "+commands[cmd].h);
+                    callback(opt.to, b(cmd)+commands[cmd].h);
                     return;
                 }
                 else {callback(opt.to, "No manual entry for "+cmd)}
@@ -70,7 +71,7 @@ module.exports = exports = function (app) {
             }
             else { ncmds.push(cmds[i]);}
         }
-        callback(opt.to, "\x02Cmds:\x0F "+ncmds.join(', '));
+        callback(opt.to, b("Cmds: ")+ncmds.join(', '));
     }
     app.cmdRegister('help', { "f": help,
         "h": "Have you tried turning it off and on again?",
